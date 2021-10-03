@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"
+        >
+<suite name="Reg">
+    <test name="reg">
+        <classes>
+            <class name="tests.RemoveContactTests"/>
+        </classes>
+    </test>
+</suite>

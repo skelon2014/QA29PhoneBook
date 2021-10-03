@@ -12,8 +12,36 @@ repositories {
 dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
     implementation 'org.testng:testng:7.1.0'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
 }
 
 test {
     useTestNG()
+}
+task reg(type: Test) {
+    useTestNG {
+        def suite = System.getProperty('suite','')
+        if (suite.equals('logNG')) {
+            suites 'src/test/resources/logNG.xml'
+        } else if (suite.equals('regNG')) {
+            suites 'src/test/resources/regNG.xml'
+        }else if (suite.equals('addNG')) {
+            suites 'src/test/resources/addNG.xml'
+        }
+        else if (suite.equals('remNG')) {
+            suites 'src/test/resources/remNG.xml'
+        }else {
+            suites 'src/test/resources/testng.xml'
+        }
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser',
+                "${browser}"
+    }
 }
