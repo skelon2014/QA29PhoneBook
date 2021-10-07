@@ -3,13 +3,10 @@ package tests;
 import models.Contact;
 import models.User;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
+import org.testng.annotations.*;
 
 public class AddNewContacts extends TestBase {
-    @BeforeMethod
+    @BeforeClass(alwaysRun = true)
     public void preCondition() {
         if (app.userHelper().isNoLogined()) {
             app.userHelper().login(new User().withEmail("kselon+4@bk.ru").withPassword("Qwerty$4"));
@@ -32,7 +29,7 @@ public class AddNewContacts extends TestBase {
         app.contactHelper().saveContact();
         Assert.assertTrue(app.contactHelper().isContactAdded(contact.getPhone()));
     }
-    @AfterMethod
+    @AfterClass
     public void postCondition(){
         app.userHelper().logout();
     }

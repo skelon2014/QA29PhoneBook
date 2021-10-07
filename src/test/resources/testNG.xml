@@ -1,7 +1,15 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"
-        >
-<suite name="Reg">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Reg" verbose="1">
     <test name="reg">
+        <groups>
+            <run>
+                <include name="web"/>
+                <exclude name="one"/>
+            </run>
+        </groups>
+
+
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.RegistrationTests"/>

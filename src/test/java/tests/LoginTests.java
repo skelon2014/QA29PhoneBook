@@ -6,13 +6,13 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class LoginTests extends TestBase{
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         if(app.userHelper().isLogged()){
             app.userHelper().logout();
         }
     }
-    @Test
+    @Test(groups = {"web"})
     public void loginTestPositive(){
         User user = new User()
                 .withEmail("skelon+4@bk.ru")
@@ -23,7 +23,7 @@ public class LoginTests extends TestBase{
         String message = app.userHelper().getText(By.xpath("//a[.='ADD']"));
         Assert.assertEquals(message, "ADD");
     }
-    @Test
+    @Test(dependsOnMethods = {"loginTestPositive"})
     public void loginTestNegativeWithWrongPassword(){
         User user = new User()
                 .withEmail("skelon+4@bk.ru")
@@ -41,6 +41,4 @@ public class LoginTests extends TestBase{
            app.userHelper().logout();
         }
     }
-
-
 }

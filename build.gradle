@@ -26,22 +26,28 @@ test {
 }
 task reg(type: Test) {
     useTestNG {
-        def suite = System.getProperty('suite','')
+
+        def groups = System.getProperty('groups')
+        if (groups != null) {
+            includeGroups groups
+        }
+
+        def suite = System.getProperty('suite', '')
         if (suite.equals('logNG')) {
             suites 'src/test/resources/logNG.xml'
         } else if (suite.equals('regNG')) {
             suites 'src/test/resources/regNG.xml'
-        }else if (suite.equals('addNG')) {
+        } else if (suite.equals('addNG')) {
             suites 'src/test/resources/addNG.xml'
-        }
-        else if (suite.equals('remNG')) {
+        } else if (suite.equals('remNG')) {
             suites 'src/test/resources/remNG.xml'
-        }else {
+        } else {
             suites 'src/test/resources/testng.xml'
         }
-    }
-    if (project.hasProperty('browser')) {
-        systemProperty 'browser',
-                "${browser}"
+
+        if (project.hasProperty('browser')) {
+            systemProperty 'browser',
+                    "${browser}"
+        }
     }
 }

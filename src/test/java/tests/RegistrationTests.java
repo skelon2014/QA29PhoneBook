@@ -9,14 +9,14 @@ import org.testng.annotations.Test;
 
 public class RegistrationTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition() {
         if (app.userHelper().isLogged()) {
             app.userHelper().logout();
         }
     }
-    @Test
-    public void registrationTest1Positive(){
+    @Test(groups = {"web"})
+    public void registrationTestPositive(){
         app.userHelper().pause(1000);
         int i = (int) (System.currentTimeMillis()/3600%1000);
         User user = new User()
@@ -28,8 +28,8 @@ public class RegistrationTests extends TestBase {
         String message = app.userHelper().getText(By.xpath("//h1[.=' No Contacts here!']"));
         Assert.assertEquals(message, "No Contacts here!");
         app.userHelper().logout();
-
     }
+
     @Test
     public void registrationTestNegativeWithWrongPassword(){
         int i = (int) (System.currentTimeMillis()/3600%1000);
@@ -42,12 +42,7 @@ public class RegistrationTests extends TestBase {
         app.userHelper().sumitRegistration();
     //    app.userHelper().alert();
         Assert.assertTrue(app.userHelper().isAlertPresent());
-
-
-
     }
-
-
     @AfterMethod
     public void postCondition(){
        if(!app.userHelper().isNoLogined()){

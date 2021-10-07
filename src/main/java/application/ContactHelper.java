@@ -5,8 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void fillContactForm(Contact contact) {
-        //  int i = (int) (System.currentTimeMillis()/1000%3600);
+
         type(By.cssSelector("input[placeholder='Name']"), contact.getName());
         type(By.cssSelector("input[placeholder='Last Name']"), contact.getLastName());
         type(By.cssSelector("input[placeholder='Phone']"), contact.getPhone());
@@ -45,32 +43,15 @@ public class ContactHelper extends HelperBase {
         return false;
     }
 
-    List<WebElement> contactsBefore = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
-    int numberBefore = contactsBefore.size();
-
-
     public void removeOneContact() {
-        List<WebElement> contactsBefore = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
-        System.out.println(contactsBefore.size());
-        if (contactsBefore != null) {
-          /*  contactsBefore.get(0).click();
-            click(By.xpath("//button[.='Remove']"));
-            pause(1000);
-            System.out.println("Remove contact: " + contactsBefore.get(0).getText());*/
-            WebElement contact = wd.findElement(By.cssSelector
-                    ("div[class='contact-page_leftdiv__yhyke'] div div:nth-child(1)"));
-          //  if(contact != null) {
+            WebElement contact = wd.findElement(By.cssSelector(".contact-item_card__2SOIM"));
+                 //   ("div[class='contact-page_leftdiv__yhyke'] div div:nth-child(1)"));
+            if(contact != null) {
                 contact.click();
                 click(By.xpath("//button[.='Remove']"));
                 System.out.println("Removed contact: " + contact.getText());
-         //   }
-        }
-    }
-
-    public boolean isContactRemoved() {
-        List<WebElement> contactsAfter = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
-        System.out.println(contactsAfter.size());
-        return contactsBefore.size() - contactsAfter.size() != 0;
+                pause(500);
+            }
     }
 
     public void removeAllContacts() {
@@ -78,5 +59,9 @@ public class ContactHelper extends HelperBase {
             removeOneContact();
             pause(500);
         }
+    }
+
+    public int sizeOfContacts() {
+        return wd.findElements(By.cssSelector(".contact-item_card__2SOIM")).size();
     }
 }
