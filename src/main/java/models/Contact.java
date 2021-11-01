@@ -14,6 +14,4 @@ public class Contact {
     String email;
     String address;
     String description;
-
-
 }
